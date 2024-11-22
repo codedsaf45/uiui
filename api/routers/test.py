@@ -14,11 +14,4 @@ gpt.question = None
 router = APIRouter()
 @router.post("/button")
 def buttoninput():
-    return{"button":state_manager.button}
-@router.post("/gptOutput")
-def get_gptOutput():
-    return {"gptresponse": state_manager.response}
-
-@router.post("/UserInput")
-def get_UserInput():
-    return {"usermessage": state_manager.question}
+    return{"button":10}

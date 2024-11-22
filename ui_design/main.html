@@ -144,8 +144,23 @@
             font-weight: bold;
             font-family: 'Noto Sans KR', sans-serif;
         }
+
+        #dateTime {
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: 'Noto Sans KR', sans-serif;
+            position: fixed;
+            left: 50%;
+            /* 화면의 정중앙으로 이동 */
+            top: 15px;
+            transform: translateX(-50%);
+            /* 요소의 가로 중심점을 조정 */
+            text-align: center;
+            align-items: center;
+        }
     </style>
-    <link rel="stylesheet" href = "css/navibutton.css">
+    <link rel="stylesheet" href="css/navibutton.css">
 
 </head>
 
@@ -153,10 +168,13 @@
 
 
     <div class="container">
+        <div id="dateTime"></div>
+
         <div class="first box">
             <img src="https://cdn.pixabay.com/photo/2015/09/09/09/46/building-931283_1280.jpg" width=1920px height=940px
                 class=spaced_image>
         </div>
+
 
 
 
@@ -302,7 +320,7 @@
                 } else if (svgElement.classList.contains('voice')) {
                     modal.style.display = "flex";
                     console.log("Voice 버튼 클릭");
-                    modalContent.innerHTML = "<h2>Introduce</h2><p>Content for Introduce</p>";
+                    modalContent.innerHTML = "<h2>Introduce</h2><p>Content for Introduce</p><p id='response'>응답<p>";
                     // Camera 클릭 시 동작 추가
                 }
 
@@ -320,6 +338,61 @@
 
 
 
+    </script>
+    <script>
+        async function getGptOutput() {
+            const response = await fetch('http://127.0.0.1:8000/gptOutput', {
+                method: 'POST'
+            });
+            const data = await response.json();
+            console.log("GPT Response:", data.gptresponse);
+            document.getElementById('response').innerText = data.response;
+        }
+
+        async function getUserInput() {
+            const response = await fetch('http://127.0.0.1:8000/UserInput', {
+                method: 'POST'
+            });
+            const data = await response.json();
+            console.log("User Message:", data.usermessage);
+            document.getElementById('response').innerText = data.response;
+        }
+
+        // 함수 호출 추가
+        getGptOutput();
+        getUserInput();
+    </script>
+    <script>
+        function getFormattedDate() {
+            const now = new Date();
+
+            // 월, 일, 요일, 시간 가져오기
+            const months = [
+                "1월", "2월", "3월", "4월", "5월", "6월",
+                "7월", "8월", "9월", "10월", "11월", "12월"
+            ];
+            const days = ["일", "월", "화", "수", "목", "금", "토"];
+
+            const month = months[now.getMonth()];
+            const date = now.getDate();
+            const day = days[now.getDay()];
+
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            // 포맷팅된 문자열 반환
+            return `${month} ${date}일(${day}) ${hours}:${minutes}`;
+        }
+
+        function updateDateTime() {
+            // 날짜와 시간을 가져와 HTML에 표시
+            document.getElementById('dateTime').innerText = getFormattedDate();
+        }
+
+        // 처음 실행 및 매 초 업데이트
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
     </script>
 </body>
 
