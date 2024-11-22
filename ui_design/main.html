@@ -145,6 +145,7 @@
             font-family: 'Noto Sans KR', sans-serif;
         }
     </style>
+    <link rel="stylesheet" href = "css/navibutton.css">
 
 </head>
 
@@ -281,21 +282,27 @@
                 if (svgElement.classList.contains('intruduce')) {
                     console.log("Intruduce 버튼 클릭");
                     modal.style.display = "flex"; // Intruduce 클릭 시 모달 표시
-                    modalContent.innerHTML = "<h2>Introduce</h2><p>Content for Introduce</p> <a href='https://www.naver.com'>네이버</a>";
+                    modalContent.innerHTML = "<h1>개발예정입니다</h1>";
 
                 } else if (svgElement.classList.contains('location')) {
                     console.log("Location 버튼 클릭");
                     modal.style.display = "flex";
-                    modalContent.innerHTML = "<h2>Introduce</h2><p>Content for Introduce</p>";
+                    modalContent.innerHTML = `<h2>Introduce</h2><p>Content for Introduce</p>
+                    <button class="NaviIcon">응급실</button>
+                    <button class="NaviIcon">수납처</button>
+                    <button class="NaviIcon">편의점</button>
+                    <button class="NaviIcon">화장실</button>
+                    `
                     // Location 클릭 시 동작 추가
                 } else if (svgElement.classList.contains('camera')) {
                     modal.style.display = "flex";
                     console.log("Camera 버튼 클릭");
-                    modalContent.innerHTML = "<video id='webcam' autoplay playsinline style='display: none; width: 640px; height: 480px;'></video>"
+                    modalContent.innerHTML = "<video id='webcam' autoplay playsinline style='display: none; width: 100%; height: 100%;'></video>"
                     // Camera 클릭 시 동작 추가
                 } else if (svgElement.classList.contains('voice')) {
                     modal.style.display = "flex";
                     console.log("Voice 버튼 클릭");
+                    modalContent.innerHTML = "<h2>Introduce</h2><p>Content for Introduce</p>";
                     // Camera 클릭 시 동작 추가
                 }
 
